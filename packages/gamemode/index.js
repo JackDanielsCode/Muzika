@@ -3,6 +3,7 @@
 
 // Spawn location - Los Santos International Airport
 const SPAWN_LOCATION = new mp.Vector3(-1037.0, -2737.0, 20.0);
+const DEFAULT_PLAYER_MODEL = 'mp_m_freemode_01';
 
 // Event handler for player join
 mp.events.add('playerJoin', (player) => {
@@ -11,7 +12,7 @@ mp.events.add('playerJoin', (player) => {
     
     // Spawn the player at Los Santos airport
     player.spawn(SPAWN_LOCATION);
-    player.model = mp.joaat('mp_m_freemode_01');
+    player.model = mp.joaat(DEFAULT_PLAYER_MODEL);
 });
 
 // Event handler for player death

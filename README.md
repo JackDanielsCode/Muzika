@@ -26,7 +26,7 @@ The server is configured via `conf.json`:
 - **Server Name**: Muzika RAGE:MP Server
 - **Port**: 22005
 - **Max Players**: 100
-- **Gamemode**: freeroam
+- **Gamemode**: gamemode
 
 ## Gamemode Features
 
