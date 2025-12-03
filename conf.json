@@ -1,0 +1,22 @@
+{
+  "announce": true,
+  "bind": "0.0.0.0",
+  "gamemode": "freeroam",
+  "encryption": false,
+  "maxplayers": 100,
+  "name": "Muzika RAGE:MP Server",
+  "stream-distance": 500.0,
+  "port": 22005,
+  "disallow-multiple-connections-per-ip": true,
+  "limit-time-of-connections-per-ip": 0,
+  "url": "",
+  "language": "en",
+  "sync-rate": 40,
+  "resource-scan-thread-limit": 0,
+  "max-ping": 999,
+  "min-fps": 0,
+  "max-packet-loss": 0.2,
+  "allow-cef-debugging": false,
+  "enable-nodejs": true,
+  "csharp": "enabled"
+}

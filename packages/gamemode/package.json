@@ -1,0 +1,5 @@
+{
+  "name": "gamemode",
+  "type": "gamemode",
+  "main": "index.js"
+}

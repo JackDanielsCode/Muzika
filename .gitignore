@@ -1,0 +1,13 @@
+# RAGE:MP Server files
+server.exe
+ragemp-server.exe
+node_modules/
+logs/
+*.log
+
+# Audio files (keep the music files already in repo)
+# *.mp3
+
+# System files
+.DS_Store
+Thumbs.db
