@@ -11,7 +11,7 @@ RAGE Multiplayer (RAGE:MP) yra daugiažaidžių modifikacija Grand Theft Auto V 
 ### 🎵 Muzikos Sistema
 - **Interaktyvus muzikos grotuvas** su grafiniu vartotojo sąsaja
 - **Dainų grojaraštis** su lietuviška muzika
-- **Garsо valdymas** (0-100%)
+- **Garso valdymas** (0-100%)
 - **Greitasis klavišas** - Paspauskite **M** kad atidarytumėte muzikos grotuvą
 - **Serverio komandos** muzikai valdyti
 
@@ -67,16 +67,26 @@ Serveris palaiko šias dainas:
 
 ### Kaip Pridėti Daugiau Dainų
 
-Redaguokite `packages/gamemode/index.js` failą ir pridėkite naujus įrašus į `MUSIC_PLAYLIST` masyvą:
+1. **Serverio pusėje** - Redaguokite `packages/gamemode/index.js` failą ir pridėkite naujus įrašus į `MUSIC_PLAYLIST` masyvą:
 
 ```javascript
 const MUSIC_PLAYLIST = [
-    { name: 'Dainininkas - Daina', url: 'https://youtu.be/your-video-id' },
+    { name: 'Dainininkas - Daina', url: 'https://www.youtube.com/watch?v=YOUR_VIDEO_ID' },
     // Pridėkite daugiau čia...
 ];
 ```
 
-Taip pat atnaujinkite `client_packages/music_ui.html` failą pridėdami dainų pavadinimus į `tracks` masyvą.
+**Svarbu:** Pakeiskite `YOUR_VIDEO_ID` tikrais YouTube video ID arba naudokite tiesioginius audio stream URL.
+
+2. **Kliento pusėje** - Atnaujinkite `client_packages/music_ui.html` failą pridėdami dainų pavadinimus į `tracks` masyvą:
+
+```javascript
+const tracks = [
+    'Dainininkas - Daina',
+    'Kitas - Kita Daina',
+    // ...
+];
+```
 
 ## Kūrimas
 

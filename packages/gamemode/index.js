@@ -5,11 +5,12 @@
 const SPAWN_LOCATION = new mp.Vector3(-1037.0, -2737.0, 20.0);
 const DEFAULT_PLAYER_MODEL = 'mp_m_freemode_01';
 
-// Music playlist - URLs to music streams or files
+// Music playlist - Add your YouTube URLs or audio stream URLs here
+// Replace 'YOUR_VIDEO_ID' with actual YouTube video IDs
 const MUSIC_PLAYLIST = [
-    { name: 'PROFLAME - PIRMA VIETA', url: 'https://youtu.be/example1' },
-    { name: 'SFG.LT Intro', url: 'https://youtu.be/example2' },
-    { name: 'SURROUND - Vieni Metro', url: 'https://youtu.be/example3' }
+    { name: 'PROFLAME - PIRMA VIETA', url: 'https://www.youtube.com/watch?v=YOUR_VIDEO_ID_1' },
+    { name: 'SFG.LT Intro', url: 'https://www.youtube.com/watch?v=YOUR_VIDEO_ID_2' },
+    { name: 'SURROUND - Vieni Metro', url: 'https://www.youtube.com/watch?v=YOUR_VIDEO_ID_3' }
 ];
 
 // Store player music states
