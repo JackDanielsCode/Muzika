@@ -1,7 +1,7 @@
 {
   "announce": true,
   "bind": "0.0.0.0",
-  "gamemode": "freeroam",
+  "gamemode": "gamemode",
   "encryption": false,
   "maxplayers": 100,
   "name": "Muzika RAGE:MP Server",

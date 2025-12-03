@@ -1,13 +1,16 @@
 // RAGE:MP Server-side Gamemode
 // This is the main server-side script for the Muzika RAGE:MP server
 
+// Spawn location - Los Santos International Airport
+const SPAWN_LOCATION = new mp.Vector3(-1037.0, -2737.0, 20.0);
+
 // Event handler for player join
 mp.events.add('playerJoin', (player) => {
     console.log(`${player.name} joined the server!`);
     player.outputChatBox('Welcome to Muzika RAGE:MP Server!');
     
     // Spawn the player at Los Santos airport
-    player.spawn(new mp.Vector3(-1037.0, -2737.0, 20.0));
+    player.spawn(SPAWN_LOCATION);
     player.model = mp.joaat('mp_m_freemode_01');
 });
 
