@@ -10,9 +10,9 @@ mp.events.add('playerJoin', (player) => {
     console.log(`${player.name} joined the server!`);
     player.outputChatBox('Welcome to Muzika RAGE:MP Server!');
     
-    // Spawn the player at Los Santos airport
-    player.spawn(SPAWN_LOCATION);
+    // Set player model before spawning to avoid visual glitches
     player.model = mp.joaat(DEFAULT_PLAYER_MODEL);
+    player.spawn(SPAWN_LOCATION);
 });
 
 // Event handler for player death

@@ -18,5 +18,5 @@
   "max-packet-loss": 0.2,
   "allow-cef-debugging": false,
   "enable-nodejs": true,
-  "csharp": "enabled"
+  "csharp": "disabled"
 }
