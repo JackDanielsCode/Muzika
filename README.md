@@ -1,60 +1,137 @@
 # Muzika RAGE:MP Server
 
-This is a RAGE:MP multiplayer server for Grand Theft Auto V.
+Pilnai funkcionuojantis RAGE:MP muzikos serveris Grand Theft Auto V žaidimui.
 
-## What is RAGE:MP?
+## Kas yra RAGE:MP?
 
-RAGE Multiplayer (RAGE:MP) is a multiplayer modification for Grand Theft Auto V. It allows you to create custom game modes and play with others online.
+RAGE Multiplayer (RAGE:MP) yra daugiažaidžių modifikacija Grand Theft Auto V žaidimui. Ji leidžia kurti pasirinktinius žaidimo režimus ir žaisti su kitais internetu.
 
-## Server Structure
+## Savybės
 
-- **conf.json** - Server configuration file
-- **packages/** - Server-side packages directory
-  - **gamemode/** - Main gamemode package
-- **client_packages/** - Client-side scripts directory
+### 🎵 Muzikos Sistema
+- **Interaktyvus muzikos grotuvas** su grafiniu vartotojo sąsaja
+- **Dainų grojaraštis** su lietuviška muzika
+- **Garsо valdymas** (0-100%)
+- **Greitasis klavišas** - Paspauskite **M** kad atidarytumėte muzikos grotuvą
+- **Serverio komandos** muzikai valdyti
 
-## Installation
+### 🎮 Žaidimo Savybės
+- Automatinis žaidėjų respawn sistema (5 sekundės)
+- Transporto priemonių kūrimo sistema
+- Sveikatos ir šarvų atstatymas
+- Pozicijos informacija
+- Pilnas lietuviškų komandų palaikymas
 
-1. Download the RAGE:MP server files from [https://rage.mp/](https://rage.mp/)
-2. Extract the server files to this directory
-3. The configuration and gamemode files are already set up
-4. Run `server.exe` (Windows) or `ragemp-server` (Linux) to start the server
+### 💬 Chat Komandos
+- `/help` - Parodo visas galimas komandas
+- `/music` - Atidaro muzikos grotuvą (arba paspauskite **M**)
+- `/play [numeris]` - Groja pasirinktą dainą (pvz: /play 1)
+- `/stop` - Sustabdo muziką
+- `/playlist` - Parodo visų dainų sąrašą
+- `/volume [0-100]` - Nustato garso lygį (pvz: /volume 75)
+- `/car [modelis]` - Sukuria transporto priemonę (pvz: /car infernus)
+- `/heal` - Atgaivina sveikatą ir šarvus
+- `/pos` - Parodo jūsų dabartinę poziciją
 
-## Configuration
+## Serverio Struktūra
 
-The server is configured via `conf.json`:
-- **Server Name**: Muzika RAGE:MP Server
-- **Port**: 22005
-- **Max Players**: 100
-- **Gamemode**: gamemode
+- **conf.json** - Serverio konfigūracijos failas
+- **packages/** - Serverio pusės paketų direktorija
+  - **gamemode/** - Pagrindinis gamemode paketas su muzikos sistema
+- **client_packages/** - Kliento pusės skriptų direktorija
+  - **index.js** - Pagrindinis kliento skriptas
+  - **music_ui.html** - Muzikos grotuvo vartotojo sąsaja
 
-## Gamemode Features
+## Įdiegimas
 
-The current gamemode includes:
-- Player spawn system
-- Basic chat commands (/help, /music)
-- Music system foundation
-- Welcome messages
+1. Atsisiųskite RAGE:MP serverio failus iš [https://rage.mp/](https://rage.mp/)
+2. Išarchyvuokite serverio failus į šią direktoriją
+3. Konfigūracija ir gamemode failai jau sukonfigūruoti
+4. Paleiskite `server.exe` (Windows) arba `ragemp-server` (Linux) kad paleistumėte serverį
 
-## Development
+## Konfigūracija
 
-### Server-side Scripts
-Server-side scripts are located in `packages/gamemode/`. The main file is `index.js`.
+Serveris sukonfigūruotas per `conf.json`:
+- **Serverio Pavadinimas**: Muzika RAGE:MP Server
+- **Portas**: 22005
+- **Maksimalus Žaidėjų Skaičius**: 100
+- **Gamemode**: gamemode (muzikos sistema)
+- **Kalba**: Lietuvių (LT)
 
-### Client-side Scripts
-Client-side scripts are located in `client_packages/`. The main file is `index.js`.
+## Muzikos Grojaraštis
 
-## Commands
+Serveris palaiko šias dainas:
+1. PROFLAME - PIRMA VIETA
+2. SFG.LT Intro
+3. SURROUND - Vieni Metro
 
-- `/help` - Display available commands
-- `/music` - Music system (in development)
+### Kaip Pridėti Daugiau Dainų
 
-## Requirements
+Redaguokite `packages/gamemode/index.js` failą ir pridėkite naujus įrašus į `MUSIC_PLAYLIST` masyvą:
 
-- RAGE:MP Server (Download from rage.mp)
-- Grand Theft Auto V (for clients)
-- Node.js (if using server-side JavaScript)
+```javascript
+const MUSIC_PLAYLIST = [
+    { name: 'Dainininkas - Daina', url: 'https://youtu.be/your-video-id' },
+    // Pridėkite daugiau čia...
+];
+```
 
-## License
+Taip pat atnaujinkite `client_packages/music_ui.html` failą pridėdami dainų pavadinimus į `tracks` masyvą.
 
-This project is open source and available for modification.
+## Kūrimas
+
+### Serverio Pusės Skriptai
+Serverio pusės skriptai yra `packages/gamemode/` direktorijoje. Pagrindinis failas yra `index.js`.
+
+**Pagrindinės funkcijos:**
+- Žaidėjų valdymas (prisijungimas, išėjimas, mirtis)
+- Muzikos sistema su dainų grojaraščiu
+- Chat komandos
+- Transporto priemonių spawn sistema
+- Respawn automatika
+
+### Kliento Pusės Skriptai
+Kliento pusės skriptai yra `client_packages/` direktorijoje.
+
+**Failai:**
+- `index.js` - Pagrindinis kliento skriptas su muzikos funkcionalumu
+- `music_ui.html` - Muzikos grotuvo HTML/CSS/JS vartotojo sąsaja
+
+## Techninės Detalės
+
+### Serverio Konfigūracija
+- Node.js aktyvuotas serverio pusės JavaScript
+- C# išjungtas (naudojamas tik JavaScript)
+- CEF debugging galimas kūrimui
+- Optimizuotas sync-rate: 40
+
+### Saugumas
+- Apsauga nuo kelių prisijungimų iš vieno IP
+- Ping limitas: 999ms
+- Packet loss limitas: 20%
+
+## Reikalavimai
+
+- RAGE:MP Serveris (Atsisiųskite iš rage.mp)
+- Grand Theft Auto V (klientams)
+- Node.js (serverio pusės JavaScript)
+
+## Plėtojimas
+
+Ši sistema yra sukurta kaip pagrindas. Galite pridėti:
+- Daugiau dainų į grojaraštį
+- YouTube integracijos realiam audio streaming
+- Radijo stočių sistemą
+- Šokių animacijas su muzika
+- VIP muzikos funkcijas
+- Ir daug daugiau!
+
+## Licencija
+
+Šis projektas yra atviro kodo ir prieinamas modifikacijoms.
+
+---
+
+**Autorius:** Sukurta su GitHub Copilot  
+**Versija:** 1.0.0  
+**Palaikymas:** Lietuvių kalba (LT)

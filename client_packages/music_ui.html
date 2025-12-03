@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muzika Player</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: transparent;
+            color: white;
+            overflow: hidden;
+        }
+
+        .music-player {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 500px;
+            background: rgba(0, 0, 0, 0.9);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 40px rgba(0, 255, 255, 0.3);
+            border: 2px solid rgba(0, 255, 255, 0.5);
+        }
+
+        .player-header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(0, 255, 255, 0.3);
+        }
+
+        .player-header h1 {
+            color: #00ffff;
+            font-size: 28px;
+            margin-bottom: 5px;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+        }
+
+        .player-header p {
+            color: #aaa;
+            font-size: 14px;
+        }
+
+        .playlist {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+
+        .track {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .track:hover {
+            background: rgba(0, 255, 255, 0.2);
+            border-left-color: #00ffff;
+            transform: translateX(5px);
+        }
+
+        .track.playing {
+            background: rgba(0, 255, 0, 0.2);
+            border-left-color: #00ff00;
+        }
+
+        .track-number {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background: rgba(0, 255, 255, 0.3);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        .track-name {
+            font-size: 16px;
+            vertical-align: middle;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            background: linear-gradient(135deg, #00ffff, #0088ff);
+            border: none;
+            border-radius: 25px;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 255, 255, 0.4);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 255, 255, 0.6);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn.stop {
+            background: linear-gradient(135deg, #ff0000, #cc0000);
+            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.4);
+        }
+
+        .btn.stop:hover {
+            box-shadow: 0 6px 20px rgba(255, 0, 0, 0.6);
+        }
+
+        .volume-control {
+            margin-bottom: 20px;
+        }
+
+        .volume-label {
+            display: block;
+            margin-bottom: 10px;
+            color: #00ffff;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .volume-slider {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            background: #00ffff;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+        }
+
+        .volume-slider::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            background: #00ffff;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+            border: none;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 30px;
+            height: 30px;
+            background: rgba(255, 0, 0, 0.7);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background: rgba(255, 0, 0, 1);
+            transform: rotate(90deg);
+        }
+
+        .now-playing {
+            text-align: center;
+            padding: 15px;
+            background: rgba(0, 255, 0, 0.1);
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(0, 255, 0, 0.3);
+        }
+
+        .now-playing-label {
+            color: #00ff00;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+        .now-playing-track {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0, 255, 255, 0.5);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 255, 255, 0.8);
+        }
+    </style>
+</head>
+<body>
+    <div class="music-player">
+        <button class="close-btn" onclick="closeUI()">×</button>
+        
+        <div class="player-header">
+            <h1>🎵 MUZIKA PLAYER</h1>
+            <p>Pasirinkite dainą iš sąrašo</p>
+        </div>
+
+        <div class="now-playing" id="nowPlaying" style="display: none;">
+            <div class="now-playing-label">DABAR GROJA</div>
+            <div class="now-playing-track" id="currentTrack">-</div>
+        </div>
+
+        <div class="playlist" id="playlist">
+            <!-- Tracks will be added dynamically -->
+        </div>
+
+        <div class="volume-control">
+            <label class="volume-label">🔊 Garsumas: <span id="volumeValue">50</span>%</label>
+            <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="50">
+        </div>
+
+        <div class="controls">
+            <button class="btn" onclick="playSelected()">▶ Groti</button>
+            <button class="btn stop" onclick="stopMusic()">⏹ Stop</button>
+            <button class="btn" onclick="closeUI()">✕ Uždaryti</button>
+        </div>
+    </div>
+
+    <script>
+        const tracks = [
+            'PROFLAME - PIRMA VIETA',
+            'SFG.LT Intro',
+            'SURROUND - Vieni Metro'
+        ];
+
+        let selectedTrack = -1;
+        let currentPlayingTrack = -1;
+
+        // Initialize playlist
+        function initPlaylist() {
+            const playlistEl = document.getElementById('playlist');
+            tracks.forEach((track, index) => {
+                const trackEl = document.createElement('div');
+                trackEl.className = 'track';
+                trackEl.innerHTML = `
+                    <span class="track-number">${index + 1}</span>
+                    <span class="track-name">${track}</span>
+                `;
+                trackEl.onclick = () => selectTrack(index);
+                playlistEl.appendChild(trackEl);
+            });
+        }
+
+        function selectTrack(index) {
+            selectedTrack = index;
+            const trackElements = document.querySelectorAll('.track');
+            trackElements.forEach((el, i) => {
+                el.style.background = i === index ? 'rgba(0, 255, 255, 0.2)' : 'rgba(255, 255, 255, 0.05)';
+            });
+        }
+
+        function playSelected() {
+            if (selectedTrack === -1) {
+                alert('Pasirinkite dainą!');
+                return;
+            }
+            
+            currentPlayingTrack = selectedTrack;
+            updateNowPlaying();
+            
+            // Call RAGE:MP event
+            if (typeof mp !== 'undefined') {
+                mp.trigger('requestTrack', selectedTrack);
+            }
+            
+            // Update UI
+            const trackElements = document.querySelectorAll('.track');
+            trackElements.forEach((el, i) => {
+                el.classList.remove('playing');
+                if (i === currentPlayingTrack) {
+                    el.classList.add('playing');
+                }
+            });
+        }
+
+        function stopMusic() {
+            currentPlayingTrack = -1;
+            document.getElementById('nowPlaying').style.display = 'none';
+            
+            const trackElements = document.querySelectorAll('.track');
+            trackElements.forEach(el => el.classList.remove('playing'));
+            
+            if (typeof mp !== 'undefined') {
+                mp.trigger('closeMusicUI');
+            }
+        }
+
+        function updateNowPlaying() {
+            if (currentPlayingTrack !== -1) {
+                document.getElementById('nowPlaying').style.display = 'block';
+                document.getElementById('currentTrack').textContent = tracks[currentPlayingTrack];
+            } else {
+                document.getElementById('nowPlaying').style.display = 'none';
+            }
+        }
+
+        function closeUI() {
+            if (typeof mp !== 'undefined') {
+                mp.trigger('closeMusicUI');
+            }
+        }
+
+        // Volume control
+        const volumeSlider = document.getElementById('volumeSlider');
+        const volumeValue = document.getElementById('volumeValue');
+
+        volumeSlider.addEventListener('input', (e) => {
+            const value = e.target.value;
+            volumeValue.textContent = value;
+            
+            if (typeof mp !== 'undefined') {
+                mp.trigger('setVolume', parseFloat(value) / 100);
+            }
+        });
+
+        // Placeholder audio functions for CEF
+        function playAudio(url, volume) {
+            console.log('Playing:', url, 'at volume:', volume);
+            // Implement actual audio playback here
+        }
+
+        function stopAudio() {
+            console.log('Stopping audio');
+            // Implement stop functionality
+        }
+
+        function setVolume(volume) {
+            console.log('Setting volume to:', volume);
+            // Implement volume control
+        }
+
+        // Initialize on load
+        window.onload = initPlaylist;
+    </script>
+</body>
+</html>
